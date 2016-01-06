@@ -4,11 +4,6 @@ CLIENT_TARGET=mydhcpc
 SERVER_SRC=server.c msg.c
 CLIENT_SRC=client.c msg.c
 
-SERVER_DOT=server-diagram.dot
-SERVER_PDF=server-diagram.pdf
-CLIENT_DOT=client-diagram.dot
-CLIENT_PDF=client-diagram.pdf
-
 CC=gcc
 
 all: $(SERVER_TARGET) $(CLIENT_TARGET)
