@@ -1,8 +1,8 @@
 SERVER_TARGET=mydhcpd
 CLIENT_TARGET=mydhcpc
 
-SERVER_SRC=server.c msg.c sock_util.c
-CLIENT_SRC=client.c msg.c sock_util.c
+SERVER_SRC=server.c msg.c
+CLIENT_SRC=client.c msg.c
 
 SERVER_DOT=server-diagram.dot
 SERVER_PDF=server-diagram.pdf
@@ -26,4 +26,3 @@ $(CLIENT_PDF): $(CLIENT_DOT)
 	dot -Tpdf $< -o $@
 
 pdf: $(SERVER_PDF) $(CLIENT_PDF)
-
