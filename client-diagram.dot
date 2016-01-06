@@ -1,0 +1,23 @@
+digraph server {
+  state_init [peripheries = 2];
+  state_release [peripheries = 2];
+  program_exit [shape=box];
+
+  state_init -> state_wait_offer [label = "sending discover"];
+  state_wait_offer -> program_exit [label = "recieve no ip offer"];
+  state_wait_offer -> state_wait_reply [label = "recieve ip offer\nsending request"];
+  state_wait_reply -> state_need_ext [label = "recieve ip assign success reply"];
+  state_wait_reply -> program_exit [label = "recieve ip assign failed reply"];
+  state_need_ext -> state_wait_reply [label = "reach 1/2 expiry\nsending extend request"];
+  state_need_ext -> state_release [label = "sending release message"];
+  state_release -> program_exit;
+
+  state_wait_offer -> state_init [label = "timeout"];
+  state_wait_reply -> state_init [label = "timeout"];
+  state_init [group = 1];
+  state_wait_offer [group = 2];
+  state_wait_reply [group = 2];
+  state_need_ext [group = 2];
+  state_release [group = 2];
+  program_exit [group = 3];
+}

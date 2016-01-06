@@ -1,0 +1,20 @@
+digraph server {
+  state_init -> state_wait_discover;
+  state_wait_discover -> state_wait_request [label = "recieve discover message\nsending offer message"];
+  state_wait_request -> state_wait_extend_request_or_release [label = "recieve request message\nsending reply message\n"];
+  state_wait_extend_request_or_release -> finish [label = "recieve release message
+release assigned ip"];
+  state_wait_discover -> state_init [label = "timeout"];
+  state_wait_request -> state_init [label = "timeout"];
+  state_wait_extend_request_or_release -> state_init [label = "timeout\nrelease assigned ip"];
+  state_wait_discover -> state_wait_discover [label = "reciever discover message\nno ip available"];
+  state_wait_request -> state_wait_request [label = "recieve request\nrequested ip and offerd ip mismatch"];
+  state_init [peripheries = 2];
+  finish [shape = box];
+  state_wait_extend_request_or_release -> state_wait_extend_request_or_release [label = "recieve extend request"];
+  state_wait_request -> finish [label = "Requested is already assigned.\nsend ip assign failed reply"];
+  state_init [group = 1];
+  state_wait_discover [group = 2];
+  state_wait_request  [group = 2];
+  state_wait_extend_request_or_release [group = 2];
+}
